@@ -1,199 +1,117 @@
-cat <<'EOF' > ~/.config/polybar/config.ini
-; --- TOKYO NIGHT CYBER CONFIG (FULL WIDTH & RICH INFO) ---
+cat <<EOF > ~/.config/kitty/kitty.conf
+# --- KITTY TOKYO NIGHT STORM ---
 
-[colors]
-background = #1a1b26
-background-alt = #24283b
-foreground = #c0caf5
-primary = #7aa2f7
-secondary = #9ece6a
-alert = #f7768e
-warning = #e0af68
-disabled = #565f89
+font_family      JetBrainsMono Nerd Font
+bold_font        auto
+italic_font      auto
+bold_italic_font auto
+font_size 11.0
 
-[bar/main]
-; --- DIMENSI MENTOK (FULL WIDTH) ---
-width = 100%
-height = 30pt
-radius = 0
-offset-x = 0
-offset-y = 0
+# BACKGROUND ABU-ABU (STORM)
+background #24283b
+foreground #c0caf5
 
-; Posisi modul biar rapi
-fixed-center = true
-bottom = false
+# SETTING WINDOW
+window_padding_width 10
+background_opacity 0.95
+hide_window_decorations yes
 
-background = ${colors.background}
-foreground = ${colors.foreground}
+# CURSOR
+cursor #c0caf5
+cursor_text_color #1a1b26
 
-line-size = 3pt
-border-size = 0pt
-border-color = #00000000
+# WARNA PALETTE (TOKYO NIGHT)
+color0  #1d202f
+color1  #f7768e
+color2  #9ece6a
+color3  #e0af68
+color4  #7aa2f7
+color5  #bb9af7
+color6  #7dcfff
+color7  #a9b1d6
 
-padding-left = 0
-padding-right = 1
-module-margin = 1
-
-; FONT CONFIG
-; Font 0: Standard Text (Size 10)
-font-0 = "JetBrainsMono Nerd Font:style=Bold:size=10;2"
-; Font 1: Icon Besar / Jam Besar (Size 12)
-font-1 = "JetBrainsMono Nerd Font:style=Bold:size=12;3"
-
-; --- SUSUNAN MODUL ---
-modules-left = xworkspaces filesystem
-modules-center = date
-modules-right = wlan memory cpu backlight pulseaudio battery powermenu
-
-cursor-click = pointer
-cursor-scroll = ns-resize
-enable-ipc = true
-
-; --- MODULES ---
-
-[module/xworkspaces]
-type = internal/xworkspaces
-label-active = %name%
-label-active-background = ${colors.background-alt}
-label-active-underline= ${colors.primary}
-label-active-padding = 2
-label-occupied = %name%
-label-occupied-padding = 2
-label-urgent = %name%
-label-urgent-background = ${colors.alert}
-label-urgent-padding = 2
-label-empty = %name%
-label-empty-foreground = ${colors.disabled}
-label-empty-padding = 2
-
-; --- JAM & TANGGAL (LEBIH LENGKAP & BESAR) ---
-[module/date]
-type = internal/date
-interval = 1
-
-; Format: JAM:MENIT:DETIK | HARI, TANGGAL BULAN
-date = %H:%M:%S
-date-alt = %A, %d %B %Y
-
-format = <label>
-format-prefix = " "
-format-prefix-foreground = ${colors.primary}
-format-background = ${colors.background-alt}
-format-padding = 2
-
-; Pake font-1 (Lebih besar dikit biar ga bland)
-label = %date%
-label-foreground = ${colors.foreground}
-label-font = 2
-
-; --- DISK INFO (STORAGE) ---
-[module/filesystem]
-type = internal/fs
-interval = 25
-mount-0 = /
-format-mounted-prefix = " "
-format-mounted-prefix-foreground = ${colors.primary}
-label-mounted = %free%
-label-unmounted = %mountpoint% not mounted
-label-unmounted-foreground = ${colors.disabled}
-
-; --- NETWORK (DENGAN SPEED) ---
-[module/wlan]
-type = internal/network
-interface-type = wireless
-interval = 1.0
-
-; Format Connected: Icon + SSID + Download Speed
-format-connected = <label-connected>
-label-connected = "%{F#9ece6a}󰤨%{F-} %essid% %{F#565f89}⬇%downspeed%%{F-}"
-
-format-disconnected = <label-disconnected>
-label-disconnected = "%{F#f7768e}󰤮%{F-} Offline"
-
-[module/pulseaudio]
-type = internal/pulseaudio
-format-volume = <ramp-volume> <label-volume>
-label-volume = %percentage%%
-label-muted = "󰝟 Muted"
-label-muted-foreground = ${colors.disabled}
-ramp-volume-0 = 󰕿
-ramp-volume-1 = 󰖀
-ramp-volume-2 = 󰕾
-ramp-volume-foreground = ${colors.primary}
-
-[module/memory]
-type = internal/memory
-interval = 2
-format-prefix = "RAM "
-format-prefix-foreground = ${colors.primary}
-label = %percentage_used%%
-
-[module/cpu]
-type = internal/cpu
-interval = 2
-format-prefix = "CPU "
-format-prefix-foreground = ${colors.primary}
-label = %percentage%%
-
-[module/battery]
-type = internal/battery
-full-at = 99
-low-at = 15
-battery = BAT0
-adapter = ADP1
-poll-interval = 5
-
-format-charging = <animation-charging> <label-charging>
-format-discharging = <ramp-capacity> <label-discharging>
-label-charging = %percentage%%
-label-discharging = %percentage%%
-label-full = "󰁹 Full"
-label-low = "󰂃 LOW"
-
-ramp-capacity-0 = 󰁺
-ramp-capacity-1 = 󰁼
-ramp-capacity-2 = 󰁾
-ramp-capacity-3 = 󰂀
-ramp-capacity-4 = 󰁹
-ramp-capacity-foreground = ${colors.primary}
-
-animation-charging-0 = 󰢜
-animation-charging-1 = 󰂆
-animation-charging-2 = 󰂇
-animation-charging-3 = 󰂈
-animation-charging-4 = 󰢝
-animation-charging-foreground = ${colors.secondary}
-animation-charging-framerate = 750
-
-[module/backlight]
-type = internal/backlight
-card = intel_backlight
-use-ui-max = true
-format = <ramp-screen> <label>
-label = %percentage%%
-ramp-screen-0 = 󰃞
-ramp-screen-1 = 󰃝
-ramp-screen-2 = 󰃟
-ramp-screen-3 = 󰃠
-ramp-screen-foreground = ${colors.warning}
-
-[module/powermenu]
-type = custom/menu
-expand-right = true
-format-spacing = 1
-label-open = ""
-label-open-foreground = ${colors.alert}
-label-close = ""
-label-close-foreground = ${colors.primary}
-label-separator = |
-label-separator-foreground = ${colors.disabled}
-
-menu-0-0 = "Reboot"
-menu-0-0-exec = reboot
-menu-0-1 = "Power Off"
-menu-0-1-exec = poweroff
-
-[settings]
-screenchange-reload = true
-pseudo-transparency = true
+color8  #414868
+color9  #f7768e
+color10 #9ece6a
+color11 #e0af68
+color12 #7aa2f7
+color13 #bb9af7
+color14 #7dcfff
+color15 #c0caf5
 EOF
+
+
+
+
+
+
+mkdir -p ~/.config/dunst
+cat <<EOF > ~/.config/dunst/dunstrc
+[global]
+    width = 300
+    height = 60
+    origin = bottom-center
+    offset = 10x50
+    scale = 0
+    notification_limit = 3
+
+    # TAMPILAN
+    font = JetBrainsMono Nerd Font 10
+    frame_width = 2
+    frame_color = "#7aa2f7"
+    corner_radius = 10
+    separator_color = frame
+    padding = 10
+    horizontal_padding = 10
+    text_icon_padding = 0
+    icon_position = left
+
+    # FORMAT
+    format = "<b>%s</b>\n%b"
+    markup = full
+    show_age_threshold = 60
+    word_wrap = yes
+    ignore_newline = no
+    stack_duplicates = true
+    hide_duplicate_count = false
+
+[urgency_low]
+    background = "#1a1b26"
+    foreground = "#c0caf5"
+    timeout = 4
+
+[urgency_normal]
+    background = "#24283b"
+    foreground = "#c0caf5"
+    timeout = 4
+
+[urgency_critical]
+    background = "#f7768e"
+    foreground = "#1a1b26"
+    frame_color = "#ff0000"
+    timeout = 0
+EOF
+
+
+
+cat <<'EOF' >> ~/.config/i3/config
+
+# --- OSD NOTIFICATIONS & KEYBOARD BACKLIGHT ---
+
+# 1. VOLUME (Pake pamixer + Dunstify)
+# Tag 'audio' biar notifnya ga numpuk banyak, tapi replace yang lama
+bindsym XF86AudioRaiseVolume exec "pamixer -i 5; dunstify -h string:x-dunst-stack-tag:audio -h int:value:$(pamixer --get-volume) 'Volume: $(pamixer --get-volume)%'"
+bindsym XF86AudioLowerVolume exec "pamixer -d 5; dunstify -h string:x-dunst-stack-tag:audio -h int:value:$(pamixer --get-volume) 'Volume: $(pamixer --get-volume)%'"
+bindsym XF86AudioMute exec "pamixer -t; dunstify -h string:x-dunst-stack-tag:audio 'Volume: Mute Toggle'"
+
+# 2. SCREEN BRIGHTNESS (Pake brightnessctl + Dunstify)
+bindsym XF86MonBrightnessUp exec "brightnessctl s +5%; dunstify -h string:x-dunst-stack-tag:screen 'Brightness: Up'"
+bindsym XF86MonBrightnessDown exec "brightnessctl s 5%-; dunstify -h string:x-dunst-stack-tag:screen 'Brightness: Down'"
+
+# 3. KEYBOARD BACKLIGHT (MacBook)
+# Device biasanya namanya '*kbd_backlight'
+bindsym XF86KbdBrightnessUp exec "brightnessctl --device='*::kbd_backlight' s +10%; dunstify -h string:x-dunst-stack-tag:kbd 'Keyboard Light: Up'"
+bindsym XF86KbdBrightnessDown exec "brightnessctl --device='*::kbd_backlight' s 10%-; dunstify -h string:x-dunst-stack-tag:kbd 'Keyboard Light: Down'"
+EOF
+
+
