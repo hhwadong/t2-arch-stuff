@@ -1,16 +1,13 @@
-# --- MEDIA CONTROLS & NOTIFICATIONS (FINAL FIX) ---
+cat <<EOF >> ~/.config/i3/config
 
-# 1. VOLUME (Pakai pamixer)
-bindsym XF86AudioRaiseVolume exec --no-startup-id sh -c "pamixer -i 5; dunstify -h string:x-dunst-stack-tag:audio -h int:value:$(pamixer --get-volume) \"VOL: $(pamixer --get-volume)%\""
-bindsym XF86AudioLowerVolume exec --no-startup-id sh -c "pamixer -d 5; dunstify -h string:x-dunst-stack-tag:audio -h int:value:$(pamixer --get-volume) \"VOL: $(pamixer --get-volume)%\""
-bindsym XF86AudioMute exec --no-startup-id sh -c "pamixer -t; dunstify -h string:x-dunst-stack-tag:audio \"MUTED\""
+# --- MEDIA CONTROLS (VIA SCRIPT) ---
+bindsym XF86AudioRaiseVolume exec --no-startup-id ~/.config/i3/scripts/osd_handler.sh vol_up
+bindsym XF86AudioLowerVolume exec --no-startup-id ~/.config/i3/scripts/osd_handler.sh vol_down
+bindsym XF86AudioMute exec --no-startup-id ~/.config/i3/scripts/osd_handler.sh vol_mute
 
-# 2. SCREEN BRIGHTNESS (Class: backlight)
-# Note: cut -d, -f4 mengambil angka max/percent. Kita pakai field yang ada %-nya.
-bindsym XF86MonBrightnessUp exec --no-startup-id sh -c "brightnessctl -c backlight set +5% && dunstify -h string:x-dunst-stack-tag:screen -h int:value:$(brightnessctl -c backlight -m | cut -d, -f4 | tr -d %) \"BRIGHTNESS: $(brightnessctl -c backlight -m | cut -d, -f4)\""
-bindsym XF86MonBrightnessDown exec --no-startup-id sh -c "brightnessctl -c backlight set 5%- && dunstify -h string:x-dunst-stack-tag:screen -h int:value:$(brightnessctl -c backlight -m | cut -d, -f4 | tr -d %) \"BRIGHTNESS: $(brightnessctl -c backlight -m | cut -d, -f4)\""
+bindsym XF86MonBrightnessUp exec --no-startup-id ~/.config/i3/scripts/osd_handler.sh screen_up
+bindsym XF86MonBrightnessDown exec --no-startup-id ~/.config/i3/scripts/osd_handler.sh screen_down
 
-# 3. KEYBOARD BACKLIGHT (Device: *kbd_backlight)
-# Kita target device apapun yang berakhiran 'kbd_backlight'
-bindsym XF86KbdBrightnessUp exec --no-startup-id sh -c "brightnessctl -d '*kbd_backlight' set +10% && dunstify -h string:x-dunst-stack-tag:kbd -h int:value:$(brightnessctl -d '*kbd_backlight' -m | cut -d, -f4 | tr -d %) \"KBD LIGHT: $(brightnessctl -d '*kbd_backlight' -m | cut -d, -f4)\""
-bindsym XF86KbdBrightnessDown exec --no-startup-id sh -c "brightnessctl -d '*kbd_backlight' set 10%- && dunstify -h string:x-dunst-stack-tag:kbd -h int:value:$(brightnessctl -d '*kbd_backlight' -m | cut -d, -f4 | tr -d %) \"KBD LIGHT: $(brightnessctl -d '*kbd_backlight' -m | cut -d, -f4)\""
+bindsym XF86KbdBrightnessUp exec --no-startup-id ~/.config/i3/scripts/osd_handler.sh kbd_up
+bindsym XF86KbdBrightnessDown exec --no-startup-id ~/.config/i3/scripts/osd_handler.sh kbd_down
+EOF
